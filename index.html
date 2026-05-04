@@ -13,18 +13,19 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            color: #fff;
         }
 
         .container {
-            background: white;
+            background: #0f3460;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             max-width: 1000px;
             width: 100%;
@@ -41,7 +42,7 @@
 
         .left-panel {
             padding: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: white;
             display: flex;
             flex-direction: column;
@@ -56,7 +57,7 @@
 
         .left-panel p {
             font-size: 16px;
-            opacity: 0.9;
+            opacity: 0.85;
             line-height: 1.6;
         }
 
@@ -77,12 +78,12 @@
             content: "✓";
             font-size: 20px;
             font-weight: bold;
-            color: #4ade80;
+            color: #00d4ff;
         }
 
         .right-panel {
             padding: 40px;
-            background: #f8f9fa;
+            background: #0f3460;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -100,8 +101,8 @@
         .browse-btn {
             width: 100%;
             padding: 15px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #000;
             border: none;
             border-radius: 10px;
             font-size: 16px;
@@ -112,7 +113,7 @@
 
         .browse-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
         }
 
         .browse-btn:active {
@@ -120,23 +121,23 @@
         }
 
         .file-info {
-            background: white;
+            background: #1a2332;
             padding: 20px;
             border-radius: 10px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #2d3e50;
             min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #999;
+            color: #7a8a99;
             transition: all 0.3s;
         }
 
         .file-info.has-file {
-            border-color: #667eea;
-            background: #f0f4ff;
-            color: #333;
+            border-color: #00d4ff;
+            background: #152840;
+            color: #fff;
             justify-content: flex-start;
             flex-direction: column;
             align-items: flex-start;
@@ -144,27 +145,27 @@
 
         .file-name {
             font-weight: 600;
-            color: #333;
+            color: #00d4ff;
             margin-bottom: 8px;
             word-break: break-all;
         }
 
         .file-size {
-            color: #666;
+            color: #a0aab8;
             font-size: 14px;
         }
 
         .target-size-control {
-            background: white;
+            background: #1a2332;
             padding: 20px;
             border-radius: 10px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #2d3e50;
         }
 
         .target-size-control label {
             display: block;
             margin-bottom: 10px;
-            color: #333;
+            color: #fff;
             font-weight: 600;
             font-size: 14px;
         }
@@ -178,19 +179,21 @@
         .target-size-control input[type="number"] {
             flex: 1;
             padding: 10px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #2d3e50;
             border-radius: 8px;
             font-size: 14px;
+            background: #0f2437;
+            color: #00d4ff;
             transition: border-color 0.3s;
         }
 
         .target-size-control input[type="number"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #00d4ff;
         }
 
         .target-size-control span {
-            color: #666;
+            color: #a0aab8;
             font-weight: 500;
         }
 
@@ -198,12 +201,39 @@
             width: 100%;
             margin-top: 10px;
             cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #2d3e50;
+            outline: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .size-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
         .size-display {
             text-align: center;
             margin-top: 10px;
-            color: #667eea;
+            color: #00d4ff;
             font-weight: 600;
             font-size: 14px;
         }
@@ -266,21 +296,21 @@
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #e0e0e0;
+            background: #2d3e50;
             border-radius: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
             width: 0%;
             transition: width 0.3s;
         }
 
         .progress-text {
             text-align: center;
-            color: #666;
+            color: #a0aab8;
             font-size: 14px;
             font-weight: 500;
         }
@@ -329,35 +359,35 @@
         }
 
         .status-message.success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #6ee7b7;
+            background: #1a4d2e;
+            color: #4ade80;
+            border: 1px solid #22c55e;
         }
 
         .status-message.error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
+            background: #4d1a1a;
+            color: #f87171;
+            border: 1px solid #ef4444;
         }
 
         .status-message.info {
-            background: #dbeafe;
-            color: #0c2340;
-            border: 1px solid #93c5fd;
+            background: #1a2f4d;
+            color: #60a5fa;
+            border: 1px solid #3b82f6;
         }
 
         .compression-settings {
-            background: white;
+            background: #1a2332;
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #2d3e50;
             font-size: 13px;
-            color: #666;
+            color: #a0aab8;
             line-height: 1.6;
         }
 
         .right-panel h3 {
-            color: #333;
+            color: #fff;
             font-size: 18px;
             margin-bottom: 15px;
         }
@@ -365,9 +395,9 @@
         .preview-video {
             margin-top: 20px;
             padding: 20px;
-            background: white;
+            background: #1a2332;
             border-radius: 10px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #2d3e50;
             display: none;
         }
 
@@ -384,7 +414,7 @@
 
         .preview-label {
             font-weight: 600;
-            color: #333;
+            color: #00d4ff;
             margin-bottom: 10px;
             font-size: 14px;
         }
@@ -497,24 +527,9 @@
         const previewContainer = document.getElementById('previewContainer');
         const previewContent = document.getElementById('previewContent');
 
-        // Sync target size input and slider
-        targetSizeInput.addEventListener('change', (e) => {
-            sizeSlider.value = e.target.value;
-            updateSizeDisplay();
-        });
-
-        sizeSlider.addEventListener('input', (e) => {
-            targetSizeInput.value = e.target.value;
-            updateSizeDisplay();
-        });
-
-        function updateSizeDisplay() {
-            const size = targetSizeInput.value;
-            sizeDisplay.textContent = `Target: ${size} MB`;
-        }
-
-        // File selection
-        fileInput.addEventListener('change', (e) => {
+        // Fix: File input change event
+        fileInput.addEventListener('change', function(e) {
+            console.log('File input changed:', e.target.files);
             selectedFile = e.target.files[0];
             if (selectedFile) {
                 const fileSizeMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
@@ -528,8 +543,41 @@
                 previewContainer.classList.remove('show');
                 compressedBlob = null;
                 clearStatus();
+                console.log('File selected successfully:', selectedFile.name);
+            } else {
+                console.log('No file selected');
             }
         });
+
+        // Fix: Sync target size input and slider - bidirectional
+        targetSizeInput.addEventListener('input', function(e) {
+            const value = e.target.value;
+            sizeSlider.value = value;
+            updateSizeDisplay();
+        });
+
+        targetSizeInput.addEventListener('change', function(e) {
+            const value = e.target.value;
+            sizeSlider.value = value;
+            updateSizeDisplay();
+        });
+
+        sizeSlider.addEventListener('input', function(e) {
+            const value = e.target.value;
+            targetSizeInput.value = value;
+            updateSizeDisplay();
+        });
+
+        sizeSlider.addEventListener('change', function(e) {
+            const value = e.target.value;
+            targetSizeInput.value = value;
+            updateSizeDisplay();
+        });
+
+        function updateSizeDisplay() {
+            const size = targetSizeInput.value;
+            sizeDisplay.textContent = `Target: ${size} MB`;
+        }
 
         // Compress button
         compressBtn.addEventListener('click', async () => {
@@ -565,22 +613,6 @@
             } catch (error) {
                 showStatus('Failed to load compression engine: ' + error.message, 'error');
                 throw error;
-            }
-        }
-
-        async function getVideoDuration(inputFileName) {
-            try {
-                const result = await ffmpeg.run(
-                    '-i', inputFileName,
-                    '-f', 'null',
-                    '-'
-                );
-                
-                // This will fail but we capture stderr which contains duration info
-                return null; // We'll estimate based on file size
-            } catch (e) {
-                // Expected to fail, duration is in stderr
-                return null;
             }
         }
 
