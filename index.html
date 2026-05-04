@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Compressor - Video & Audio Compression Tool</title>
+    <title>Media Compressor</title>
     <style>
         * {
             margin: 0;
@@ -116,10 +116,6 @@
             box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
         }
 
-        .browse-btn:active {
-            transform: translateY(0);
-        }
-
         .file-info {
             background: #1a2332;
             padding: 20px;
@@ -174,6 +170,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            margin-bottom: 10px;
         }
 
         .target-size-control input[type="number"] {
@@ -184,7 +181,6 @@
             font-size: 14px;
             background: #0f2437;
             color: #00d4ff;
-            transition: border-color 0.3s;
         }
 
         .target-size-control input[type="number"]:focus {
@@ -199,7 +195,7 @@
 
         .size-slider {
             width: 100%;
-            margin-top: 10px;
+            margin-bottom: 10px;
             cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
@@ -212,8 +208,8 @@
         .size-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
             cursor: pointer;
@@ -221,8 +217,8 @@
         }
 
         .size-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
             cursor: pointer;
@@ -232,7 +228,6 @@
 
         .size-display {
             text-align: center;
-            margin-top: 10px;
             color: #00d4ff;
             font-weight: 600;
             font-size: 14px;
@@ -260,27 +255,9 @@
             box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
         }
 
-        .compress-btn:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
         .compress-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .progress-container {
@@ -341,10 +318,6 @@
             box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4);
         }
 
-        .download-btn:active {
-            transform: translateY(0);
-        }
-
         .status-message {
             text-align: center;
             padding: 15px;
@@ -386,12 +359,6 @@
             line-height: 1.6;
         }
 
-        .right-panel h3 {
-            color: #fff;
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-
         .preview-video {
             margin-top: 20px;
             padding: 20px;
@@ -418,6 +385,12 @@
             margin-bottom: 10px;
             font-size: 14px;
         }
+
+        .right-panel h3 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -428,7 +401,6 @@
                 <h1>📹 Media Compressor</h1>
                 <p>Compress your video and audio files to your desired size with ease</p>
             </div>
-
             <ul class="feature-list">
                 <li>Support for MP4, WebM, MOV, MKV, MP3, WAV, AAC</li>
                 <li>Custom compression target size</li>
@@ -448,24 +420,20 @@
                 <!-- File Input -->
                 <div class="file-input-wrapper">
                     <input type="file" id="fileInput" accept="video/*,audio/*">
-                    <button class="browse-btn" onclick="document.getElementById('fileInput').click()">
-                        📂 Browse & Select File
-                    </button>
+                    <button class="browse-btn" id="browseBtn">📂 Browse & Select File</button>
                 </div>
 
                 <!-- File Info Display -->
-                <div class="file-info" id="fileInfo">
-                    No file selected
-                </div>
+                <div class="file-info" id="fileInfo">No file selected</div>
 
                 <!-- Target Size Control -->
                 <div class="target-size-control">
-                    <label for="targetSize">Target Compression Size (MB)</label>
+                    <label>Target Compression Size (MB)</label>
                     <div class="size-input-group">
-                        <input type="number" id="targetSize" min="1" max="1000" value="9" step="1">
+                        <input type="number" id="targetSize" min="1" max="1000" value="9">
                         <span>MB</span>
                     </div>
-                    <input type="range" class="size-slider" id="sizeSlider" min="1" max="1000" value="9">
+                    <input type="range" id="sizeSlider" min="1" max="1000" value="9" class="size-slider">
                     <div class="size-display" id="sizeDisplay">Target: 9 MB</div>
                 </div>
 
@@ -474,16 +442,14 @@
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
-                    <div class="progress-text" id="progressText">Preparing compression...</div>
+                    <div class="progress-text" id="progressText">Preparing...</div>
                 </div>
 
                 <!-- Status Message -->
                 <div class="status-message" id="statusMessage"></div>
 
                 <!-- Compress Button -->
-                <button class="compress-btn" id="compressBtn" disabled>
-                    ⚡ Compress File
-                </button>
+                <button class="compress-btn" id="compressBtn" disabled>⚡ Compress File</button>
 
                 <!-- Preview Container -->
                 <div class="preview-video" id="previewContainer">
@@ -492,12 +458,10 @@
                 </div>
 
                 <!-- Download Button -->
-                <button class="download-btn" id="downloadBtn">
-                    ⬇️ Download Compressed File
-                </button>
+                <button class="download-btn" id="downloadBtn">⬇️ Download Compressed File</button>
 
                 <div class="compression-settings">
-                    <strong>💡 Note:</strong> Uses H.264 video codec (H264) with proper MP4 muxing. Files are fully playable after compression. Preview to verify quality before downloading.
+                    <strong>💡 Note:</strong> Uses H.264 codec with MP4 muxing. Files are fully playable after compression.
                 </div>
             </div>
         </div>
@@ -511,9 +475,10 @@
         let selectedFile = null;
         let compressedBlob = null;
         let compressedFileName = null;
-        let videoDuration = null;
 
+        // DOM Elements
         const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
         const fileInfo = document.getElementById('fileInfo');
         const targetSizeInput = document.getElementById('targetSize');
         const sizeSlider = document.getElementById('sizeSlider');
@@ -527,93 +492,79 @@
         const previewContainer = document.getElementById('previewContainer');
         const previewContent = document.getElementById('previewContent');
 
-        // Fix: File input change event
-        fileInput.addEventListener('change', function(e) {
-            console.log('File input changed:', e.target.files);
-            selectedFile = e.target.files[0];
+        // CLICK BROWSE BUTTON
+        browseBtn.onclick = function() {
+            fileInput.click();
+        };
+
+        // FILE INPUT CHANGE
+        fileInput.onchange = function() {
+            selectedFile = fileInput.files[0];
             if (selectedFile) {
-                const fileSizeMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
-                fileInfo.innerHTML = `
-                    <div class="file-name">📄 ${selectedFile.name}</div>
-                    <div class="file-size">Size: ${fileSizeMB} MB | Type: ${selectedFile.type}</div>
-                `;
+                const sizeMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
+                fileInfo.innerHTML = `<div class="file-name">📄 ${selectedFile.name}</div><div class="file-size">Size: ${sizeMB} MB</div>`;
                 fileInfo.classList.add('has-file');
                 compressBtn.disabled = false;
-                downloadBtn.classList.remove('show');
-                previewContainer.classList.remove('show');
-                compressedBlob = null;
-                clearStatus();
-                console.log('File selected successfully:', selectedFile.name);
             } else {
-                console.log('No file selected');
+                fileInfo.textContent = 'No file selected';
+                fileInfo.classList.remove('has-file');
+                compressBtn.disabled = true;
             }
-        });
+        };
 
-        // Fix: Sync target size input and slider - bidirectional
-        targetSizeInput.addEventListener('input', function(e) {
-            const value = e.target.value;
-            sizeSlider.value = value;
-            updateSizeDisplay();
-        });
+        // NUMBER INPUT CHANGE
+        targetSizeInput.onchange = function() {
+            sizeSlider.value = this.value;
+            updateDisplay();
+        };
 
-        targetSizeInput.addEventListener('change', function(e) {
-            const value = e.target.value;
-            sizeSlider.value = value;
-            updateSizeDisplay();
-        });
+        targetSizeInput.oninput = function() {
+            sizeSlider.value = this.value;
+            updateDisplay();
+        };
 
-        sizeSlider.addEventListener('input', function(e) {
-            const value = e.target.value;
-            targetSizeInput.value = value;
-            updateSizeDisplay();
-        });
+        // SLIDER CHANGE
+        sizeSlider.onchange = function() {
+            targetSizeInput.value = this.value;
+            updateDisplay();
+        };
 
-        sizeSlider.addEventListener('change', function(e) {
-            const value = e.target.value;
-            targetSizeInput.value = value;
-            updateSizeDisplay();
-        });
+        sizeSlider.oninput = function() {
+            targetSizeInput.value = this.value;
+            updateDisplay();
+        };
 
-        function updateSizeDisplay() {
-            const size = targetSizeInput.value;
-            sizeDisplay.textContent = `Target: ${size} MB`;
+        function updateDisplay() {
+            sizeDisplay.textContent = `Target: ${targetSizeInput.value} MB`;
         }
 
-        // Compress button
-        compressBtn.addEventListener('click', async () => {
+        // COMPRESS BUTTON
+        compressBtn.onclick = async function() {
             if (!selectedFile) {
-                showStatus('Please select a file first', 'error');
+                showStatus('Please select a file', 'error');
                 return;
             }
-
             if (!ffmpeg.isLoaded()) {
                 await loadFFmpeg();
             }
-
             await compressFile();
-        });
+        };
 
-        // Download button
-        downloadBtn.addEventListener('click', () => {
+        // DOWNLOAD BUTTON
+        downloadBtn.onclick = function() {
             if (!compressedBlob) return;
-
             const url = URL.createObjectURL(compressedBlob);
             const a = document.createElement('a');
             a.href = url;
             a.download = compressedFileName;
             a.click();
             URL.revokeObjectURL(url);
-        });
+        };
 
         async function loadFFmpeg() {
-            try {
-                showStatus('Loading compression engine...', 'info');
-                await ffmpeg.load();
-                clearStatus();
-            } catch (error) {
-                showStatus('Failed to load compression engine: ' + error.message, 'error');
-                throw error;
-            }
+            showStatus('Loading...', 'info');
+            await ffmpeg.load();
+            clearStatus();
         }
 
         async function compressFile() {
@@ -625,81 +576,40 @@
 
                 const targetSizeMB = parseInt(targetSizeInput.value);
                 const targetSizeBytes = targetSizeMB * 1024 * 1024;
-                const fileSizeBytes = selectedFile.size;
                 const isVideo = selectedFile.type.startsWith('video/');
 
                 progressText.textContent = 'Reading file...';
                 progressFill.style.width = '10%';
 
-                // Write file to FFmpeg
                 const data = await fetchFile(selectedFile);
                 const inputFileName = selectedFile.name;
                 ffmpeg.FS('writeFile', inputFileName, data);
 
-                progressText.textContent = 'Analyzing media...';
-                progressFill.style.width = '20%';
+                progressText.textContent = 'Compressing...';
+                progressFill.style.width = '40%';
 
-                // Get video duration for bitrate calculation
-                let duration = 60; // Default estimate
-                if (isVideo) {
-                    try {
-                        // Use ffprobe-equivalent command
-                        await ffmpeg.run(
-                            '-i', inputFileName
-                        );
-                    } catch (e) {
-                        // Duration extraction from stderr would go here
-                        // For now, we'll use estimation
-                    }
-                }
-
-                // Calculate bitrate more accurately
                 let videoBitrate = '800k';
                 let audioBitrate = '128k';
 
                 if (isVideo) {
-                    // Estimate: (targetSize * 8 bits) / duration in seconds
-                    // We'll use a more conservative approach
-                    const estimatedDurationSeconds = 120; // Conservative estimate
+                    const estimatedDurationSeconds = 120;
                     const totalBitrate = (targetSizeBytes * 8) / estimatedDurationSeconds;
                     const calcVideoBitrate = Math.max(300, Math.floor((totalBitrate - 128000) / 1000));
                     videoBitrate = calcVideoBitrate + 'k';
                 } else {
-                    // For audio: more aggressive compression
                     const estimatedDurationSeconds = 300;
                     const calcBitrate = Math.max(32, Math.floor((targetSizeBytes * 8) / (estimatedDurationSeconds * 1000)));
                     audioBitrate = calcBitrate + 'k';
                 }
 
-                progressText.textContent = `Compressing with ${isVideo ? videoBitrate + ' video' : audioBitrate + ' audio'} bitrate...`;
-                progressFill.style.width = '40%';
-
-                // Determine output format - ALWAYS use MP4 for videos to ensure compatibility
-                const ext = inputFileName.split('.').pop().toLowerCase();
                 const outputExt = isVideo ? 'mp4' : 'mp3';
-                let outputFileName = inputFileName.replace(/\.[^/.]+$/, '') + '_compressed.' + outputExt;
-                
-                // FFmpeg command with proper settings for playable files
+                const outputFileName = inputFileName.replace(/\.[^/.]+$/, '') + '_compressed.' + outputExt;
+
                 let command = [];
                 if (isVideo) {
-                    command = [
-                        '-i', inputFileName,
-                        '-c:v', 'libx264',           // H.264 codec - most compatible
-                        '-preset', 'medium',          // Balance between speed and quality
-                        '-b:v', videoBitrate,         // Video bitrate
-                        '-c:a', 'aac',                // AAC audio codec
-                        '-b:a', audioBitrate,         // Audio bitrate
-                        '-movflags', '+faststart',    // Enable streaming
-                        '-pix_fmt', 'yuv420p',        // Standard pixel format for compatibility
-                        outputFileName
-                    ];
+                    command = ['-i', inputFileName, '-c:v', 'libx264', '-preset', 'medium', '-b:v', videoBitrate, '-c:a', 'aac', '-b:a', audioBitrate, '-movflags', '+faststart', '-pix_fmt', 'yuv420p', outputFileName];
                 } else {
-                    command = [
-                        '-i', inputFileName,
-                        '-c:a', 'libmp3lame',         // MP3 codec for better compatibility
-                        '-b:a', audioBitrate,
-                        outputFileName
-                    ];
+                    command = ['-i', inputFileName, '-c:a', 'libmp3lame', '-b:a', audioBitrate, outputFileName];
                 }
 
                 await ffmpeg.run(...command);
@@ -707,45 +617,34 @@
                 progressFill.style.width = '80%';
                 progressText.textContent = 'Finalizing...';
 
-                // Read compressed file
                 const compressedData = ffmpeg.FS('readFile', outputFileName);
-                compressedBlob = new Blob([compressedData.buffer], { 
-                    type: isVideo ? 'video/mp4' : 'audio/mpeg'
-                });
+                compressedBlob = new Blob([compressedData.buffer], { type: isVideo ? 'video/mp4' : 'audio/mpeg' });
                 compressedFileName = outputFileName;
 
-                // Verify file is not empty
                 if (compressedBlob.size === 0) {
-                    throw new Error('Compression resulted in empty file');
+                    throw new Error('Empty file');
                 }
 
-                // Clean up
                 ffmpeg.FS('unlink', inputFileName);
                 ffmpeg.FS('unlink', outputFileName);
 
                 progressFill.style.width = '100%';
-                progressText.textContent = 'Compression complete!';
+                progressText.textContent = 'Done!';
 
-                const originalSizeMB = (fileSizeBytes / (1024 * 1024)).toFixed(2);
-                const compressedSizeMB = (compressedBlob.size / (1024 * 1024)).toFixed(2);
-                const reduction = (((fileSizeBytes - compressedBlob.size) / fileSizeBytes) * 100).toFixed(1);
+                const originalMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
+                const compressedMB = (compressedBlob.size / (1024 * 1024)).toFixed(2);
+                const reduction = (((selectedFile.size - compressedBlob.size) / selectedFile.size) * 100).toFixed(1);
 
                 setTimeout(() => {
                     progressContainer.classList.remove('active');
-                    showStatus(
-                        `✓ Success! ${originalSizeMB}MB → ${compressedSizeMB}MB (${reduction}% reduction)`,
-                        'success'
-                    );
-                    
-                    // Show preview
+                    showStatus(`✓ ${originalMB}MB → ${compressedMB}MB (${reduction}% reduction)`, 'success');
                     showPreview();
                     downloadBtn.classList.add('show');
-                }, 1000);
+                }, 800);
 
             } catch (error) {
                 progressContainer.classList.remove('active');
-                showStatus('Compression error: ' + error.message, 'error');
-                console.error('Compression error:', error);
+                showStatus('Error: ' + error.message, 'error');
             } finally {
                 compressBtn.disabled = false;
             }
@@ -753,37 +652,24 @@
 
         function showPreview() {
             if (!compressedBlob) return;
-
             const url = URL.createObjectURL(compressedBlob);
             const isVideo = compressedBlob.type.startsWith('video/');
-
+            
             if (isVideo) {
-                previewContent.innerHTML = `
-                    <video controls style="width: 100%; border-radius: 8px; background: #000;">
-                        <source src="${url}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
+                previewContent.innerHTML = `<video controls style="width: 100%; border-radius: 8px;"><source src="${url}" type="video/mp4"></video>`;
             } else {
-                previewContent.innerHTML = `
-                    <audio controls style="width: 100%;">
-                        <source src="${url}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                `;
+                previewContent.innerHTML = `<audio controls style="width: 100%;"><source src="${url}" type="audio/mpeg"></audio>`;
             }
-
             previewContainer.classList.add('show');
         }
 
-        function showStatus(message, type) {
-            statusMessage.textContent = message;
+        function showStatus(msg, type) {
+            statusMessage.textContent = msg;
             statusMessage.className = `status-message show ${type}`;
         }
 
         function clearStatus() {
             statusMessage.classList.remove('show');
-            statusMessage.textContent = '';
         }
     </script>
 </body>
